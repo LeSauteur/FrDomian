@@ -1655,9 +1655,35 @@ if (!checkExistingSession()) {
             rotateQuotes();
         });
     </script>
+    <script>
+    // Автоматическое выделение активного пункта меню
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPage = window.location.pathname.split('/').pop();
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            // Проверяем основные пункты меню
+            const href = item.getAttribute('href');
+            if (href && href === currentPage) {
+                item.classList.add('active');
+            }
+            
+            // Проверяем пункты подменю
+            const submenuItems = item.querySelectorAll('.submenu-item');
+            submenuItems.forEach(submenuItem => {
+                const subHref = submenuItem.getAttribute('href');
+                if (subHref && subHref === currentPage) {
+                    item.classList.add('active'); // Подсвечиваем родительский пункт
+                    submenuItem.classList.add('active'); // Подсвечиваем текущий пункт в подменю
+                }
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
+
 
 
 
